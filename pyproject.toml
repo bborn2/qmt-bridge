@@ -41,7 +41,13 @@ client = ["websockets>=11.0"]
 notify = ["httpx>=0.25"]
 scripts = ["tqdm>=4.60"]
 full = [
-    "qmt-bridge[server,ws,notify,scripts]",
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.20",
+    "pandas>=1.5",
+    "numpy>=1.23",
+    "websockets>=11.0",
+    "httpx>=0.25",
+    "tqdm>=4.60",
 ]
 docs = [
     "mkdocs>=1.5",
@@ -49,11 +55,7 @@ docs = [
     "mkdocstrings[python]>=0.24",
     "pdoc>=14.0",
 ]
-dashboard = [
-    "streamlit>=1.30",
-    "plotly>=5.18",
-    "pandas>=1.5",
-]
+dashboard = ["streamlit>=1.30", "plotly>=5.18", "pandas>=1.5"]
 
 [project.scripts]
 qmt-server = "qmt_bridge.server.cli:main"
@@ -65,6 +67,9 @@ Repository = "https://github.com/atompilot/qmt-bridge"
 
 [tool.hatch.version]
 path = "src/qmt_bridge/_version.py"
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.8", "mypy>=1.10", "build>=1.2", "twine>=5.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/qmt_bridge"]
