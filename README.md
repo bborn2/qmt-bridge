@@ -78,6 +78,19 @@ uv sync --extra client
 
 ```bash
 cp .env.example .env
+```
+
+如需启用 Bark 推送，可在 `.env` 中配置：
+
+```env
+QMT_BRIDGE_NOTIFY_ENABLED=true
+QMT_BRIDGE_NOTIFY_BACKENDS=bark
+QMT_BRIDGE_BARK_URL=https://api.day.app/your-key
+QMT_BRIDGE_BARK_SOUND=birdsong
+QMT_BRIDGE_BARK_GROUP=QMT Bridge
+```
+
+```bash
 # 按需编辑 .env
 ```
 

@@ -91,6 +91,12 @@ class Settings:
     webhook_url: str = ""       # 通用 Webhook 回调地址
     webhook_secret: str = ""    # Webhook 密钥（通过 X-Webhook-Secret 请求头发送）
 
+    # ---- Bark 推送配置 ----
+    bark_url: str = ""          # Bark 推送地址，例如 https://api.day.app/your-key
+    bark_sound: str = "birdsong"  # Bark 推送音效
+    bark_group: str = ""        # Bark 分组名（可选）
+    bark_icon: str = ""         # Bark 图标地址（可选）
+
     # ---- 定时下载调度配置 ----
     scheduler_kline_enabled: bool = True         # 是否启用 K 线增量下载
     scheduler_kline_periods: str = "1d,5m,1m"    # K 线周期，逗号分隔
@@ -150,6 +156,10 @@ class Settings:
             ),
             webhook_url=os.environ.get("QMT_BRIDGE_WEBHOOK_URL", ""),
             webhook_secret=os.environ.get("QMT_BRIDGE_WEBHOOK_SECRET", ""),
+            bark_url=os.environ.get("QMT_BRIDGE_BARK_URL", ""),
+            bark_sound=os.environ.get("QMT_BRIDGE_BARK_SOUND", "birdsong"),
+            bark_group=os.environ.get("QMT_BRIDGE_BARK_GROUP", ""),
+            bark_icon=os.environ.get("QMT_BRIDGE_BARK_ICON", ""),
             # 定时下载调度配置
             scheduler_kline_enabled=os.environ.get(
                 "QMT_BRIDGE_SCHEDULER_KLINE_ENABLED", "true"

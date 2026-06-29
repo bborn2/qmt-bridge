@@ -160,6 +160,18 @@ class NotifierManager:
                 webhook_url=settings.webhook_url,
                 secret=settings.webhook_secret,
             )
+        if name == "bark":
+            from .bark import BarkBackend
+
+            if not settings.bark_url:
+                logger.warning("bark backend requested but BARK_URL is empty")
+                return None
+            return BarkBackend(
+                url=settings.bark_url,
+                sound=settings.bark_sound,
+                group=settings.bark_group,
+                icon=settings.bark_icon,
+            )
         logger.warning("Unknown notify backend: %s", name)
         return None
 
