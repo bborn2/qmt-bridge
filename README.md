@@ -1,3 +1,11 @@
+## 更新说明
+
+- 已将项目切换为基于 uv 的依赖与环境管理，使用 uv sync、uv run 和 uv lock 进行安装、运行和依赖锁定。
+- 更新了项目配置与任务脚本，补齐 Python 版本约束、依赖分组和完整安装方式。
+- 增加了 .python-version 与 uv.lock，便于在不同机器上保持一致的开发环境。
+
+---
+
 # QMT Bridge
 
 > 将 miniQMT 的行情与交易能力通过 HTTP/WebSocket 接口暴露给局域网内的任意设备，让你在 Mac/Linux 上也能自由使用 A 股实时行情、历史数据和程序化交易。
@@ -50,20 +58,20 @@ git clone https://github.com/qmt-bridge/qmt-bridge.git
 cd qmt-bridge
 
 # 安装服务端（含 WebSocket 支持）
-pip install -e ".[full]"
+uv sync --extra full
 
 # 或者只安装服务端（不含 WebSocket）
-pip install -e ".[server]"
+uv sync --extra server
 ```
 
 如果只需要在远程机器上使用客户端：
 
 ```bash
 # 零依赖安装（仅 HTTP）
-pip install -e .
+uv sync
 
 # 含 WebSocket 订阅支持
-pip install -e ".[client]"
+uv sync --extra client
 ```
 
 ### 2. 配置
