@@ -1,9 +1,82 @@
 ## 更新说明
 
 - 已新增对 Bark 推送的支持，可通过 Bark 服务将交易与系统通知推送到 iPhone 设备。
-- 已将项目切换为基于 uv 的依赖与环境管理，使用 uv sync、uv run 和 uv lock 进行安装、运行和依赖锁定。
+- 已将项目切换为基于 [uv](https://docs.astral.sh/uv/) 的依赖与环境管理，使用 `uv sync`、`uv run`、`uv lock` 进行安装、运行和依赖锁定。
 - 更新了项目配置与任务脚本，补齐 Python 版本约束、依赖分组和完整安装方式。
-- 增加了 .python-version 与 uv.lock，便于在不同机器上保持一致的开发环境。
+- 增加了 `.python-version` 与 `uv.lock`，便于在不同机器上保持一致的开发环境。
+
+### 快速上手（uv + just）
+
+本项目使用 [just](https://github.com/casey/just) 管理常用命令，配合 uv 一键安装与运行。
+
+**1. 安装 just（命令运行器）**
+
+```powershell
+# Windows（任选其一）
+winget install Casey.Just
+scoop install just
+```
+
+```bash
+# macOS / Linux
+brew install just
+```
+
+> 未安装 just 也可以，直接执行下表「等价命令」一栏的 uv 命令即可。
+
+**2. 安装 uv**
+
+```powershell
+# Windows（PowerShell）
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+```bash
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**3. 安装环境与依赖**
+
+uv 会按 `.python-version`（当前为 3.12）自动准备 Python 解释器，并依据 `uv.lock` 创建 `.venv`，无需手动建虚拟环境。
+
+| just 命令 | 等价命令 | 用途 |
+|---|---|---|
+| `just install-server` | `uv sync --extra full` | 服务端全量（含 xtquant、WebSocket、推送等） |
+| `just install-all` | `uv sync --extra full --extra docs --extra dashboard` | 服务端 + 文档 + 仪表盘 |
+| `just install` | `uv sync` | 仅客户端（零依赖，跨平台） |
+| — | `uv sync --extra client` | 客户端 + WebSocket 订阅 |
+
+> Windows 服务端需要 `xtquant`。它已纳入 `server` / `full` extra，会随上面的命令一并安装；若你的 QMT 客户端自带 xtquant，也可改用客户端目录下的版本。
+
+**4. 启动服务**
+
+启动前请先打开 QMT 客户端并以「独立交易」模式登录（详见下方 Quick Start）。
+
+| just 命令 | 等价命令 | 用途 |
+|---|---|---|
+| `just serve` | `uv run qmt-server` | 前台启动 API 服务（Ctrl+C 停止） |
+| `just serve-port 8080` | `uv run qmt-server --port 8080` | 指定端口启动 |
+| `just serve-debug` | `uv run qmt-server --log-level debug` | 调试模式 |
+| `just scheduler` | `uv run qmt-scheduler` | 启动定时下载调度器（独立进程） |
+
+Windows 下也可用脚本启动（已适配 uv，直接调用 `.venv\Scripts\qmt-server.exe`）：
+
+```powershell
+scripts\start.bat          # 前台运行（Ctrl+C 停止）
+scripts\start-nohup.bat    # 后台运行
+scripts\stop.bat           # 停止后台服务
+```
+
+**5. 其他常用命令**
+
+```bash
+just              # 列出全部可用命令
+just test         # 运行测试
+just check        # 格式化 + lint（ruff）
+just download-all # 下载 A 股历史行情 + 财务数据
+just dashboard    # 启动可视化仪表盘
+```
 
 ---
 
