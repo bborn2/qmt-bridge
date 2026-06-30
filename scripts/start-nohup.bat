@@ -17,9 +17,13 @@ if exist "%PID_FILE%" (
 
 echo [QMT Bridge] 启动服务 (后台模式)...
 
+REM 构造 -ArgumentList 参数：有参数才附加，避免空参时传入空字符串
+set "ARG_LIST="
+if not "%*"=="" set "ARG_LIST=-ArgumentList '%*' "
+
 REM 使用 PowerShell 以隐藏窗口方式启动进程
 powershell -NoProfile -Command ^
-  "$p = Start-Process -FilePath qmt-server -ArgumentList '%*' ^
+  "$p = Start-Process -FilePath '%cd%\.venv\Scripts\qmt-server.exe' %ARG_LIST%^
     -WindowStyle Hidden ^
     -RedirectStandardOutput '%LOG_FILE%' ^
     -RedirectStandardError '%cd%\qmt-bridge-error.log' ^

@@ -14,7 +14,7 @@ if exist "%PID_FILE%" (
 echo [QMT Bridge] 启动服务 (前台模式)...
 echo [QMT Bridge] 按 Ctrl+C 停止
 
-qmt-server %*
+.venv\Scripts\qmt-server.exe %*
 goto :eof
 
 :check_pid
