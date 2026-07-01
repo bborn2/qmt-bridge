@@ -34,7 +34,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 **3. 安装环境与依赖**
 
-uv 会按 `.python-version`（当前为 3.12）自动准备 Python 解释器，并依据 `uv.lock` 创建 `.venv`，无需手动建虚拟环境。
+uv 会按 `.python-version`（当前为 3.11）自动准备 Python 解释器，并依据 `uv.lock` 创建 `.venv`，无需手动建虚拟环境。
 
 | just 命令 | 等价命令 | 用途 |
 |---|---|---|
